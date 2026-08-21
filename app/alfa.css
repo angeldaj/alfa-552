@@ -1,0 +1,308 @@
+/* CIA ALFA 552 — landing theme.
+   Overhaul visual language: "cinematic aviation prestige".
+   One accent (aviation gold), monochrome photography, sharp architectural edges.
+   Fonts (Archivo + IBM Plex Mono) are loaded via next/font in layout.tsx. */
+
+:root[data-theme="dark"] {
+  --bg: #0a0b0d;
+  --surface: #121417;
+  --surface-2: #191c21;
+  --line: #262a30;
+  --hairline: #23262c;
+  --mid: #838994;
+  --lt: #c3c7cd;
+  --ink: #f4f5f6;
+  --accent: #e8b647; /* fills, borders, decorative marks */
+  --accent-text: #edbe52; /* gold used as TEXT — AA on dark */
+  --accent-ink: #0a0b0d; /* text on a gold fill */
+  --scrim: rgba(8, 9, 11, 0.62);
+}
+
+:root[data-theme="light"] {
+  --bg: #fbfbf9;
+  --surface: #f1f1ed;
+  --surface-2: #e8e8e3;
+  --line: #dadbd5;
+  --hairline: #e0e1db;
+  --mid: #6a6e74;
+  --lt: #3d4046;
+  --ink: #0c0d0f;
+  --accent: #d99f22;
+  --accent-text: #8a6410; /* deep gold — AA on light */
+  --accent-ink: #0a0b0d;
+  --scrim: rgba(250, 250, 248, 0.5);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+#alfa-root {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+/* Anchor jumps clear the fixed 64px header */
+#alfa-root section[id] {
+  scroll-margin-top: 4rem;
+}
+
+/* ---- Containment + spacing rhythm ------------------------------------- */
+/* Content column caps at max-w-7xl (80rem) with fluid gutters, so the page
+   breathes on large screens while section rules still span full width. */
+.alfa-container {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 3rem);
+}
+/* For split/grid blocks whose columns carry their own insets. */
+.alfa-frame {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+}
+/* Generous vertical separation between sections; tight groupings live inside. */
+.alfa-section {
+  padding-block: clamp(4.5rem, 9vw, 8rem);
+}
+
+#alfa-root a {
+  color: inherit;
+  text-decoration: none;
+}
+#alfa-root ::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* ---- Type utilities ---------------------------------------------------- */
+.mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-feature-settings: "tnum";
+}
+.eyebrow {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+.kicker {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+
+/* ---- Photography treatment (single-chroma system) --------------------- */
+.alfa-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.06) brightness(0.97);
+}
+:root[data-theme="light"] .alfa-photo {
+  filter: grayscale(1) contrast(1.02) brightness(1.02);
+}
+.alfa-photo--warm {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---- Interactive states ---------------------------------------------- */
+.alfa-navlink {
+  position: relative;
+  color: var(--lt);
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.alfa-navlink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  height: 1px;
+  width: 0;
+  background: var(--accent);
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.alfa-navlink:hover {
+  color: var(--ink);
+}
+.alfa-navlink:hover::after {
+  width: 100%;
+}
+
+.alfa-cta {
+  transition:
+    background 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.2s ease,
+    border-color 0.4s ease;
+}
+.alfa-cta:active {
+  transform: translateY(1px);
+}
+.alfa-cta--solid {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: 1px solid var(--accent);
+}
+.alfa-cta--solid:hover {
+  background: transparent;
+  color: var(--ink);
+}
+.alfa-cta--ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+.alfa-cta--ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+.alfa-post {
+  transition:
+    background 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.alfa-post:hover {
+  background: var(--surface);
+}
+.alfa-post:hover .alfa-photo {
+  filter: grayscale(0.35) contrast(1.08) brightness(1);
+}
+
+.alfa-submit:hover {
+  background: var(--accent) !important;
+  color: var(--accent-ink) !important;
+  border-color: var(--accent) !important;
+}
+
+/* program row image reveal on hover/open */
+.alfa-prog:hover {
+  background: var(--surface);
+}
+
+/* ---- Scroll reveal (driven by IntersectionObserver in scroll-fx.tsx) -- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-reveal="mask"] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-revealed] {
+  opacity: 1 !important;
+  transform: none !important;
+  clip-path: inset(0 0 0 0) !important;
+}
+
+/* ---- Parallax (native scroll-driven, progressive enhancement) --------- */
+/* Two layers moving at different rates: the photograph drifts down and scales
+   while the foreground copy lifts and fades, giving the hero real depth. */
+.alfa-hero-img {
+  transform: scale(1.12);
+  transform-origin: center 42%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .alfa-hero-img {
+      animation: alfa-hero-img-par linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100vh;
+      will-change: transform;
+    }
+    @keyframes alfa-hero-img-par {
+      to {
+        transform: scale(1.26) translateY(9%);
+      }
+    }
+    .alfa-hero-content {
+      animation: alfa-hero-content-par linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 90vh;
+      will-change: transform, opacity;
+    }
+    @keyframes alfa-hero-content-par {
+      to {
+        transform: translateY(-16%);
+        opacity: 0.25;
+      }
+    }
+  }
+}
+
+/* Section photography: gentle ken-burns drift as the block crosses the viewport. */
+.alfa-kenburns {
+  transform: scale(1.06);
+}
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .alfa-kenburns {
+      animation: alfa-kenburns linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+      will-change: transform;
+    }
+    @keyframes alfa-kenburns {
+      from {
+        transform: scale(1.16) translateY(-2.5%);
+      }
+      to {
+        transform: scale(1.02) translateY(2.5%);
+      }
+    }
+  }
+}
+
+/* ---- Reduced motion --------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+  .alfa-hero-img,
+  .alfa-kenburns {
+    transform: none;
+  }
+  #alfa-root * {
+    transition-duration: 0.01ms !important;
+    animation: none !important;
+  }
+}
+
+/* ---- Theme-aware logo swap + grain ------------------------------------ */
+:root[data-theme="light"] [data-logo="dark"] {
+  display: none;
+}
+:root:not([data-theme="light"]) [data-logo="light"] {
+  display: none;
+}
+:root[data-theme="light"] [data-grain] {
+  mix-blend-mode: multiply;
+  opacity: 0.035;
+}
+
+/* ---- Mobile ----------------------------------------------------------- */
+@media (max-width: 767px) {
+  .alfa-hide-mobile {
+    display: none !important;
+  }
+}

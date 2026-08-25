@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { cohorts } from "./data";
 
 export function Cohorts() {
@@ -13,6 +14,12 @@ export function Cohorts() {
         >
           Calendario de ingreso, pista 2026-2027.
         </h2>
+        <Link
+          href="/calendario"
+          className="alfa-navlink mono mt-1 w-fit text-[11px] tracking-[0.14em] text-[var(--accent-text)]"
+        >
+          VER CALENDARIO ACADÉMICO COMPLETO →
+        </Link>
       </div>
 
       <div className="mt-14 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">

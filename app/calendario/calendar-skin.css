@@ -1,0 +1,273 @@
+/* CIA ALFA 552 — Schedule-X skin.
+   Bends the default Schedule-X theme onto the "cinematic aviation prestige"
+   system: dark single-chroma, aviation gold as the only accent, sharp edges,
+   hairline grid, IBM Plex Mono for all technical numerals. Everything is scoped
+   under `.alfa-cal` so the calendar tokens never leak into the rest of the page.
+   Token source of truth remains app/alfa.css (--bg / --accent / --line ...). */
+
+/* ---- Token bridge: map Schedule-X variables onto our design tokens -------- */
+:root[data-theme="dark"] .alfa-cal,
+:root[data-theme="light"] .alfa-cal {
+  --sx-color-background: var(--bg);
+  --sx-color-on-background: var(--ink);
+
+  --sx-color-surface: var(--surface);
+  --sx-color-surface-dim: var(--bg);
+  --sx-color-surface-bright: var(--surface-2);
+  --sx-color-surface-container: var(--surface);
+  --sx-color-surface-container-low: var(--surface);
+  --sx-color-surface-container-high: var(--surface-2);
+  --sx-color-on-surface: var(--ink);
+  --sx-color-surface-tint: transparent;
+
+  --sx-color-primary: var(--accent);
+  --sx-color-on-primary: var(--accent-ink);
+  --sx-color-primary-container: color-mix(in srgb, var(--accent) 20%, var(--surface));
+  --sx-color-on-primary-container: var(--accent-text);
+
+  --sx-color-secondary: var(--lt);
+  --sx-color-on-secondary: var(--bg);
+  --sx-color-secondary-container: var(--surface-2);
+  --sx-color-on-secondary-container: var(--ink);
+
+  --sx-color-tertiary: var(--lt);
+  --sx-color-on-tertiary: var(--bg);
+  --sx-color-tertiary-container: var(--surface-2);
+  --sx-color-on-tertiary-container: var(--ink);
+
+  --sx-color-neutral: var(--mid);
+  --sx-color-neutral-variant: var(--mid);
+
+  --sx-color-outline: var(--line);
+  --sx-color-outline-variant: var(--hairline);
+
+  --sx-internal-color-text: var(--ink);
+  --sx-internal-color-light-gray: var(--hairline);
+  --sx-internal-color-gray-ripple-background: color-mix(in srgb, var(--accent) 22%, transparent);
+
+  --sx-color-shadow: transparent;
+  --sx-color-primary-fixed: var(--accent);
+
+  /* Sharp architectural edges everywhere. */
+  --sx-rounding-extra-small: 0px;
+  --sx-rounding-small: 0px;
+  --sx-rounding-extra-large: 0px;
+
+  --sx-border: 1px solid var(--hairline);
+  --sx-box-shadow-level3: none;
+
+  --sx-week-grid-hour-height: 62px;
+}
+
+/* ---- Shell ---------------------------------------------------------------- */
+.alfa-cal .sx-react-calendar-wrapper {
+  width: 100%;
+  height: clamp(560px, 76vh, 820px);
+}
+
+.alfa-cal .sx__calendar {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  background: var(--bg);
+  border: none;
+  color: var(--ink);
+}
+.alfa-cal .sx__calendar-wrapper {
+  border: none;
+}
+.alfa-cal .sx__view-container {
+  border: 1px solid var(--hairline);
+  border-top: none;
+}
+
+/* We render our own toolbar — hide Schedule-X's built-in header entirely. */
+.alfa-cal .sx__calendar-header {
+  display: none;
+}
+
+/* ---- Month grid ----------------------------------------------------------- */
+.alfa-cal .sx__month-grid-week {
+  border-color: var(--hairline);
+}
+.alfa-cal .sx__month-grid-day {
+  border-color: var(--hairline);
+  background: var(--bg);
+  transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.alfa-cal .sx__month-grid-day:hover {
+  background: var(--surface);
+}
+.alfa-cal .sx__month-grid-day__header {
+  padding: 6px 8px 2px;
+}
+.alfa-cal .sx__month-grid-day__header-day-name {
+  display: none; /* weekday names live in the sticky header row */
+}
+.alfa-cal .sx__month-grid-day__header-date {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--mid);
+  background: transparent;
+  width: auto;
+  height: auto;
+  padding: 2px 4px;
+}
+.alfa-cal .sx__month-grid-day__header-date.sx__is-today {
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-radius: 0;
+}
+.alfa-cal .sx__month-grid-day__events-more {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+  padding-left: 6px;
+}
+
+/* Weekday-name header row (month view uses the same header component). */
+.alfa-cal .sx__week-header,
+.alfa-cal .sx__month-agenda-day-names {
+  border-color: var(--hairline);
+  background: var(--surface);
+}
+
+/* ---- Week / day grid ------------------------------------------------------ */
+.alfa-cal .sx__week-grid,
+.alfa-cal .sx__week-wrapper,
+.alfa-cal .sx__time-grid-day,
+.alfa-cal .sx__week-grid__hour {
+  border-color: var(--hairline);
+}
+.alfa-cal .sx__week-grid__hour-text,
+.alfa-cal .sx__week-grid__date-number {
+  font-family: var(--font-mono), monospace;
+  color: var(--mid);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+.alfa-cal .sx__week-grid__day-name {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+.alfa-cal .sx__week-grid__date--is-today .sx__week-grid__date-number,
+.alfa-cal .sx__week-grid__date--is-today .sx__week-grid__day-name {
+  color: var(--accent-text);
+}
+.alfa-cal .sx__current-time-indicator,
+.alfa-cal .sx__current-time-indicator-full-week {
+  background: var(--accent);
+  color: var(--accent);
+}
+
+/* ---- Event shells: let our custom chips own the visuals ------------------- */
+.alfa-cal .sx__month-grid-event,
+.alfa-cal .sx__time-grid-event,
+.alfa-cal .sx__date-grid-event {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  overflow: visible;
+}
+.alfa-cal .sx__month-grid-event {
+  margin: 1px 4px;
+}
+.alfa-cal .sx__time-grid-event {
+  padding: 0;
+}
+/* Kill the default focus ring; our chips carry their own focus-visible state. */
+.alfa-cal .sx__event:focus,
+.alfa-cal .sx__month-grid-event:focus,
+.alfa-cal .sx__time-grid-event:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Thin, themed scrollbars inside the week grid. */
+.alfa-cal .sx__week-wrapper {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+.alfa-cal .sx__week-wrapper::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.alfa-cal .sx__week-wrapper::-webkit-scrollbar-thumb {
+  background: var(--line);
+}
+
+/* ---- Loading skeleton (mirrors the month grid footprint) ----------------- */
+.alfa-cal-skeleton {
+  height: clamp(560px, 76vh, 820px);
+  border: 1px solid var(--hairline);
+  background:
+    linear-gradient(var(--hairline) 1px, transparent 1px) 0 0 / 100% calc(100% / 6),
+    linear-gradient(90deg, var(--hairline) 1px, transparent 1px) 0 0 / calc(100% / 7) 100%,
+    var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+.alfa-cal-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    color-mix(in srgb, var(--surface) 70%, transparent) 50%,
+    transparent 80%
+  );
+  transform: translateX(-100%);
+  animation: alfa-cal-shimmer 1.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+@keyframes alfa-cal-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* ---- Hover card (Radix HoverCard, origin-aware) -------------------------- */
+.alfa-hovercard {
+  transform-origin: var(--radix-hover-card-content-transform-origin);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .alfa-hovercard[data-state="open"] {
+    animation: alfa-hc-in 0.19s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .alfa-hovercard[data-state="closed"] {
+    animation: alfa-hc-out 0.12s ease-in forwards;
+  }
+}
+@keyframes alfa-hc-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(4px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+@keyframes alfa-hc-out {
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+/* ---- Reduced motion ------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .alfa-cal-skeleton::after {
+    animation: none;
+  }
+  .alfa-cal * {
+    transition-duration: 0.01ms !important;
+  }
+}

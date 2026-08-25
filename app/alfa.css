@@ -295,8 +295,10 @@ html {
 :root:not([data-theme="light"]) [data-logo="light"] {
   display: none;
 }
+/* No mix-blend-mode: see components/alfa/grain.tsx for why blending a fixed
+   overlay against scrolling content is a scroll-jank trap. Light theme just
+   dials the noise down a touch. */
 :root[data-theme="light"] [data-grain] {
-  mix-blend-mode: multiply;
   opacity: 0.035;
 }
 

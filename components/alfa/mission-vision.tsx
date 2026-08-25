@@ -71,13 +71,13 @@ function Panel({
           alt={alt}
           loading="lazy"
           decoding="async"
-          className="alfa-photo alfa-kenburns"
+          className="alfa-photo--warm alfa-kenburns"
         />
         <div className="absolute inset-0" style={{ background: scrim }} />
       </div>
 
       <div
-        className={`alfa-container relative z-10 flex min-h-[82vh] flex-col justify-center gap-6 py-[clamp(5rem,10vw,9rem)] ${
+        className={`alfa-container relative z-10 flex min-h-[68vh] flex-col justify-center gap-5 py-[clamp(4rem,8vw,7rem)] ${
           left ? "items-start text-left" : "items-end text-right"
         }`}
       >
@@ -93,7 +93,7 @@ function Panel({
         <p
           data-reveal="mask"
           style={{ transitionDelay: "0.1s", textWrap: "pretty" }}
-          className="max-w-[52ch] text-[clamp(22px,2.6vw,38px)] font-semibold leading-[1.34] tracking-[-0.02em]"
+          className="max-w-[46ch] text-[clamp(18px,1.9vw,27px)] font-normal leading-[1.5] tracking-[-0.01em] text-[var(--lt)]"
         >
           {children}
         </p>

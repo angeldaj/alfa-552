@@ -1,0 +1,32 @@
+/* Scoped polish for the /pensum screen. The heavy lifting lives in alfa.css
+   and Tailwind utilities; this file only adds the two tactile states that read
+   better in CSS than inline: the selector press-feedback and the course-cell
+   hover. Both honour hover-capable pointers and reduced-motion. */
+
+.alfa-tap {
+  transition: transform 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.alfa-tap:active {
+  transform: scale(0.98);
+}
+
+/* Course cell: a quiet lift on hover, only where a real pointer exists so a
+   tap on touch doesn't leave a stuck highlight. */
+.alfa-course {
+  transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .alfa-course:hover {
+    background: var(--surface);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alfa-tap,
+  .alfa-course {
+    transition: none;
+  }
+  .alfa-tap:active {
+    transform: none;
+  }
+}

@@ -9,10 +9,20 @@ import { SiteFooter } from "@/components/alfa/site-footer";
 import { CourseCalendar } from "@/components/alfa/course-calendar";
 import { events, CATEGORY_MAP } from "@/components/alfa/calendar-data";
 
+const PAGE_TITLE = "Calendario académico";
+const PAGE_DESCRIPTION =
+  "Horarios de clases, días de inscripción, recorridos, exámenes INAC y prácticas de simulador de los programas de CIA ALFA 552. Calendario interactivo por programa y modalidad.";
+
 export const metadata: Metadata = {
-  title: "Calendario académico · CIA ALFA 552",
-  description:
-    "Horarios de clases, días de inscripción, recorridos, exámenes INAC y prácticas de simulador de los programas de CIA ALFA 552. Calendario interactivo por programa y modalidad.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  alternates: {
+    canonical: "/calendario",
+  },
+  openGraph: {
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+  },
 };
 
 // A few standout dates for the "fechas clave" band (static, from the data set).

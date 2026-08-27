@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { HERO_SRC } from "@/components/alfa/images";
+import { SITE_URL } from "@/lib/seo/site";
 
 const archivo = Archivo({
   variable: "--font-sans",
@@ -17,10 +18,41 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
+const SITE_TITLE = {
+  default: "CIA ALFA 552 · Centro de Instrucción Aeronáutica",
+  template: "%s · CIA ALFA 552",
+};
+const SITE_DESCRIPTION =
+  "Formamos técnicos de mantenimiento aeronáutico, tripulantes de cabina, despachadores de vuelo y, próximamente, pilotos, bajo las Regulaciones Aeronáuticas Venezolanas. INAC, CIAC 552.";
+
 export const metadata: Metadata = {
-  title: "CIA ALFA 552 · Centro de Instrucción Aeronáutica",
-  description:
-    "Formamos técnicos de mantenimiento aeronáutico, tripulantes de cabina, despachadores de vuelo y, próximamente, pilotos, bajo las Regulaciones Aeronáuticas Venezolanas. INAC, CIAC 552.",
+  metadataBase: new URL(SITE_URL),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "es_VE",
+    siteName: "CIA ALFA 552",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
+};
+
+const JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  name: "CIA ALFA 552",
+  alternateName: "Centro de Instrucción Aeronáutica ALFA 552",
+  description: SITE_DESCRIPTION,
+  url: SITE_URL,
+  logo: `${SITE_URL}/favicon.ico`,
+  identifier: "CIAC 552",
 };
 
 // Runs before first paint so the theme is correct with no flash.
@@ -34,6 +66,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${archivo.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+        />
         {/* Runs before body content paints — corrects theme with no flash */}
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
         {/* React 19 hoists this preload into <head> for hero LCP */}

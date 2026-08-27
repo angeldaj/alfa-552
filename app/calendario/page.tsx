@@ -11,7 +11,7 @@ import { events, CATEGORY_MAP } from "@/components/alfa/calendar-data";
 
 const PAGE_TITLE = "Calendario académico";
 const PAGE_DESCRIPTION =
-  "Horarios de clases, días de inscripción, recorridos, exámenes INAC y prácticas de simulador de los programas de CIA ALFA 552. Calendario interactivo por programa y modalidad.";
+  "Horarios de clases, inscripción, exámenes INAC y prácticas de simulador de CIA ALFA 552. Calendario interactivo por programa y modalidad.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
@@ -22,6 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: PAGE_TITLE,
     description: PAGE_DESCRIPTION,
+    url: "/calendario",
   },
 };
 

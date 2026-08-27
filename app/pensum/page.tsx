@@ -12,7 +12,7 @@ import { SITE_URL } from "@/lib/seo/site";
 
 const PAGE_TITLE = "Pensum";
 const PAGE_DESCRIPTION =
-  "Malla curricular de los programas de CIA ALFA 552: asignaturas, ciclos, horas de teoría y práctica, y la licencia INAC a la que conduce cada carrera. Mantenimiento, aviónica, cabina, despacho y pilotos.";
+  "Malla curricular de CIA ALFA 552: asignaturas, ciclos y horas por carrera hacia tu licencia INAC. Mantenimiento, aviónica, cabina, despacho y pilotos.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
@@ -23,6 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: PAGE_TITLE,
     description: PAGE_DESCRIPTION,
+    url: "/pensum",
   },
 };
 

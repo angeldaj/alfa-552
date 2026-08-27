@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { HERO_SRC } from "@/components/alfa/images";
@@ -23,7 +23,7 @@ const SITE_TITLE = {
   template: "%s · CIA ALFA 552",
 };
 const SITE_DESCRIPTION =
-  "Formamos técnicos de mantenimiento aeronáutico, tripulantes de cabina, despachadores de vuelo y, próximamente, pilotos, bajo las Regulaciones Aeronáuticas Venezolanas. INAC, CIAC 552.";
+  "Formamos técnicos de mantenimiento, tripulantes de cabina, despachadores de vuelo y pilotos bajo las Regulaciones Aeronáuticas Venezolanas. INAC · CIAC 552.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -32,16 +32,22 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  manifest: "/manifest.webmanifest",
   openGraph: {
     type: "website",
     locale: "es_VE",
     siteName: "CIA ALFA 552",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
+    url: "/",
   },
   twitter: {
     card: "summary_large_image",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0a0b0d",
 };
 
 const JSON_LD = {

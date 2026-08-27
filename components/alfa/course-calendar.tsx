@@ -13,7 +13,7 @@ import { Temporal } from "temporal-polyfill";
 import "@schedule-x/theme-default/dist/index.css";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useCalendarApp, ScheduleXCalendar } from "@schedule-x/react";
+import { useNextCalendarApp, ScheduleXCalendar } from "@schedule-x/react";
 import {
   createViewMonthGrid,
   createViewWeek,
@@ -157,7 +157,7 @@ export function CourseCalendar() {
       ? document.documentElement.getAttribute("data-theme")
       : "dark";
 
-  const calendar = useCalendarApp(
+  const calendar = useNextCalendarApp(
     {
       views: [createViewMonthGrid(), createViewWeek(), createViewDay()],
       defaultView: "month-grid",
@@ -169,8 +169,13 @@ export function CourseCalendar() {
       calendars: CALENDARS,
       events: allSx,
       monthGridOptions: { nEventsPerDay: 3 },
+      // Our own toolbar (above) is the only thing that should change the view —
+      // Schedule-X's built-in "auto-switch to day view under ~700px" behavior
+      // otherwise flips the grid without updating our view state, leaving the
+      // "MES" toggle highlighted while a day time-grid renders underneath.
       callbacks: {
         onSelectedDateUpdate: (date) => setAnchorISO(date.toString()),
+        isCalendarSmall: () => false,
       },
     },
     [eventsService, controls],

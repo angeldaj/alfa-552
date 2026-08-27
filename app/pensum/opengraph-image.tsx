@@ -8,6 +8,7 @@ export default async function Image() {
   return renderOgImage(
     "CIA ALFA 552 · Pensum",
     "Malla curricular",
-    "Asignaturas, ciclos y horas por carrera — mantenimiento, aviónica, cabina, despacho y pilotos"
+    "Asignaturas, ciclos y horas por carrera — mantenimiento, aviónica, cabina, despacho y pilotos",
+    "Ver la malla completa →"
   );
 }

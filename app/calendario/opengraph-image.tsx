@@ -8,6 +8,7 @@ export default async function Image() {
   return renderOgImage(
     "CIA ALFA 552 · Calendario",
     "Calendario académico",
-    "Inscripciones, exámenes INAC y prácticas de simulador por programa y modalidad"
+    "Inscripciones, exámenes INAC y prácticas de simulador por programa y modalidad",
+    "Ver el calendario →"
   );
 }

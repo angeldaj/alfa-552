@@ -2,7 +2,12 @@ import { ImageResponse } from "next/og";
 
 export const OG_SIZE = { width: 1200, height: 630 };
 
-export function renderOgImage(kicker: string, title: string, subtitle: string) {
+export function renderOgImage(
+  kicker: string,
+  title: string,
+  subtitle: string,
+  cta: string = "Ver más en alfa552.com →",
+) {
   return new ImageResponse(
     <div
       style={{
@@ -50,6 +55,21 @@ export function renderOgImage(kicker: string, title: string, subtitle: string) {
         }}
       >
         {subtitle}
+      </div>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          alignSelf: "flex-start",
+          marginTop: 48,
+          padding: "14px 28px",
+          fontSize: 24,
+          fontWeight: 600,
+          color: "#0a0b0d",
+          background: "#e8b647",
+        }}
+      >
+        {cta}
       </div>
     </div>,
     { ...OG_SIZE },

@@ -8,11 +8,23 @@ import { SiteHeader } from "@/components/alfa/site-header";
 import { SiteFooter } from "@/components/alfa/site-footer";
 import { PensumView } from "@/components/alfa/pensum-view";
 import { programs, statsFor } from "@/components/alfa/pensum-data";
+import { SITE_URL } from "@/lib/seo/site";
+
+const PAGE_TITLE = "Pensum";
+const PAGE_DESCRIPTION =
+  "Malla curricular de CIA ALFA 552: asignaturas, ciclos y horas por carrera hacia tu licencia INAC. Mantenimiento, aviónica, cabina, despacho y pilotos.";
 
 export const metadata: Metadata = {
-  title: "Pensum · CIA ALFA 552",
-  description:
-    "Malla curricular de los programas de CIA ALFA 552: asignaturas, ciclos, horas de teoría y práctica, y la licencia INAC a la que conduce cada carrera. Mantenimiento, aviónica, cabina, despacho y pilotos.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  alternates: {
+    canonical: "/pensum",
+  },
+  openGraph: {
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    url: "/pensum",
+  },
 };
 
 // Aggregate figures across the certified programs (Pilotos is still in
@@ -30,9 +42,34 @@ const totals = active.reduce(
 );
 const practicaPct = Math.round((totals.horasPractica / totals.horas) * 100);
 
+const JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  itemListElement: programs.map((p, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    item: {
+      "@type": "Course",
+      name: p.name,
+      description: p.salida,
+      timeRequired: `P${p.meses}M`,
+      provider: {
+        "@type": "EducationalOrganization",
+        name: "CIA ALFA 552",
+        url: SITE_URL,
+      },
+      hasCredential: p.licencia,
+    },
+  })),
+};
+
 export default function PensumPage() {
   return (
     <div id="alfa-root" className="relative min-w-0 [overflow-x:clip]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+      />
       <ScrollFX />
       <Grain />
       <SiteHeader />

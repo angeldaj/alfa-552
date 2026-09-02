@@ -92,6 +92,12 @@
   border-color: var(--hairline);
   background: var(--bg);
   transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Schedule-X sets `flex: 1` (flex-basis 0%) on day cells, but flex items
+     default to `min-width: auto` — a cell whose event chip has long,
+     nowrap/truncated text won't shrink below that text's intrinsic width,
+     so it grows and steals space from the rest of the row. Force it to 0
+     so every day cell actually gets an equal share and truncate can clip. */
+  min-width: 0;
 }
 .alfa-cal .sx__month-grid-day:hover {
   background: var(--surface);
@@ -172,10 +178,22 @@
   border: none;
   box-shadow: none;
   padding: 0;
-  overflow: visible;
+  /* Schedule-X sizes this wrapper to the event's exact day-span width via an
+     inline calc(). Keep its default overflow: hidden so our chip's truncate
+     actually clips instead of spilling past the day cell's edge. */
+  overflow: hidden;
 }
 .alfa-cal .sx__month-grid-event {
   margin: 1px 4px;
+}
+/* Same min-width: auto flexbox trap as the day cells above — the chip is a
+   flex row and its truncated title is a flex child, so it needs min-width: 0
+   to actually clip instead of forcing the chip (and its cell) wider. */
+.alfa-cal .alfa-chip {
+  min-width: 0;
+}
+.alfa-cal .alfa-chip .truncate {
+  min-width: 0;
 }
 .alfa-cal .sx__time-grid-event {
   padding: 0;

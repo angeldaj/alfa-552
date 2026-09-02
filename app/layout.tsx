@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
-import { Archivo, IBM_Plex_Mono } from "next/font/google";
+import { Geist, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
+import "./alfa.css";
 import { HERO_SRC } from "@/components/alfa/images";
+import { ChatWidget } from "@/components/alfa/chatbot/chat-widget";
 
-const archivo = Archivo({
+// Geist: neutral, modern grotesque. Premium and highly legible in UI and
+// headlines. Paired with IBM Plex Mono for the technical/aviation texture.
+const sans = Geist({
   variable: "--font-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
@@ -31,7 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="es"
       data-theme="dark"
-      className={`${archivo.variable} ${plexMono.variable} h-full antialiased`}
+      className={`${sans.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         {/* Runs before body content paints — corrects theme with no flash */}
@@ -39,6 +43,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {/* React 19 hoists this preload into <head> for hero LCP */}
         <link rel="preload" as="image" href={HERO_SRC} fetchPriority="high" />
         {children}
+        {/* Global fake assistant, rides above every route via the root layout */}
+        <ChatWidget />
       </body>
     </html>
   );

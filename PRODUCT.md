@@ -10,7 +10,7 @@
 
 **Aesthetic lane:** "cinematic aviation prestige" — dark, single-chroma. One full-colour aspirational hero; all other photography monochrome; aviation gold (`#e8b647`) is the only accent. Sharp architectural edges, hairline grid, technical mono details (tail numbers, program codes, checklist) that carry real information, not decoration.
 
-**Type:** Archivo (display/body) + IBM Plex Mono (technical labels/data). Both are pre-committed brand identity (IBM Plex Mono is authentic aviation-document texture here, not a reflex pick).
+**Type:** Geist (display/body) + IBM Plex Mono (technical labels/data). Geist is a neutral, modern grotesque chosen for a premium, highly-legible feel; IBM Plex Mono is authentic aviation-document texture (technical labels, tail numbers, program codes), not a reflex pick.
 
 **Tokens/theme:** `app/alfa.css` (CSS custom properties, dark default + light mode via `data-theme`, manual toggle). Tailwind v4 utilities for layout.
 

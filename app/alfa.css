@@ -1,7 +1,7 @@
 /* CIA ALFA 552 — landing theme.
    Overhaul visual language: "cinematic aviation prestige".
    One accent (aviation gold), monochrome photography, sharp architectural edges.
-   Fonts (Archivo + IBM Plex Mono) are loaded via next/font in layout.tsx. */
+   Fonts (Geist + IBM Plex Mono) are loaded via next/font in layout.tsx. */
 
 :root[data-theme="dark"] {
   --bg: #0a0b0d;
